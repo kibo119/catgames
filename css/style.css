@@ -1,0 +1,226 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  color: #47312d;
+  background: linear-gradient(135deg, #ffe2ef 0%, #dff6ff 55%, #fff7d6 100%);
+}
+
+.page-shell {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 18px;
+}
+
+.game-card {
+  width: min(94vw, 820px);
+}
+
+.hud {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.hud-item {
+  flex: 1;
+  padding: 12px 10px;
+  text-align: center;
+  font-weight: 700;
+  background: rgba(255, 255, 255, 0.82);
+  border: 3px solid #fff;
+  border-radius: 18px;
+  box-shadow: 0 8px 18px rgba(128, 83, 103, 0.14);
+}
+
+.hud-item strong {
+  color: #ff6b9a;
+  font-size: 1.25rem;
+}
+
+.game-area {
+  position: relative;
+  overflow: hidden;
+  height: min(68vh, 560px);
+  min-height: 430px;
+  border: 5px solid #fff;
+  border-radius: 28px;
+  background: linear-gradient(#a9e4ff 0%, #f7fbff 72%, #b9efbc 72%, #90db91 100%);
+  box-shadow: 0 22px 45px rgba(90, 78, 120, 0.22);
+  touch-action: none;
+}
+
+.cloud {
+  position: absolute;
+  font-size: clamp(2rem, 6vw, 3.8rem);
+  opacity: 0.8;
+  animation: floatCloud 8s ease-in-out infinite alternate;
+}
+
+.cloud-one { top: 34px; left: 8%; }
+.cloud-two { top: 88px; right: 11%; animation-delay: -3s; }
+
+.cat-layer {
+  position: absolute;
+  inset: 0;
+}
+
+.cat {
+  position: absolute;
+  width: 52px;
+  height: 52px;
+  display: grid;
+  place-items: center;
+  font-size: 2.4rem;
+  filter: drop-shadow(0 7px 6px rgba(85, 75, 88, 0.2));
+  user-select: none;
+}
+
+.player {
+  position: absolute;
+  bottom: 42px;
+  left: 50%;
+  width: 86px;
+  height: 64px;
+  display: grid;
+  place-items: center;
+  font-size: 3.5rem;
+  transform: translateX(-50%);
+  transition: filter 120ms ease;
+  z-index: 3;
+}
+
+.player.catch {
+  animation: bounceCatch 220ms ease;
+  filter: drop-shadow(0 0 12px #fff176);
+}
+
+.ground {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 40px;
+  background: repeating-linear-gradient(90deg, #7fd36f 0 24px, #74c966 24px 48px);
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: 28px;
+  text-align: center;
+  background: rgba(255, 248, 252, 0.88);
+  backdrop-filter: blur(4px);
+}
+
+.overlay-visible {
+  display: flex;
+}
+
+.overlay h1,
+.overlay h2 {
+  margin: 0;
+  color: #ff6b9a;
+  font-size: clamp(2rem, 7vw, 4rem);
+}
+
+.overlay p {
+  max-width: 480px;
+  margin: 0;
+  font-size: clamp(1rem, 3vw, 1.25rem);
+  line-height: 1.55;
+}
+
+.small-guide {
+  color: #6d7a86;
+}
+
+.primary-button,
+.control-button {
+  border: 0;
+  cursor: pointer;
+  font-weight: 800;
+  color: #fff;
+  background: linear-gradient(135deg, #ff82ad, #ffb05f);
+  box-shadow: 0 9px 0 #df5d83, 0 14px 20px rgba(167, 75, 98, 0.25);
+}
+
+.primary-button {
+  padding: 14px 26px;
+  border-radius: 999px;
+  font-size: 1.1rem;
+}
+
+.primary-button:active,
+.control-button:active {
+  transform: translateY(4px);
+  box-shadow: 0 5px 0 #df5d83, 0 8px 14px rgba(167, 75, 98, 0.22);
+}
+
+.countdown {
+  position: absolute;
+  inset: 0;
+  z-index: 6;
+  display: none;
+  place-items: center;
+  font-size: clamp(4rem, 18vw, 9rem);
+  font-weight: 900;
+  color: #ff6b9a;
+  text-shadow: 0 5px 0 #fff;
+  pointer-events: none;
+}
+
+.countdown.show {
+  display: grid;
+  animation: pop 700ms ease;
+}
+
+.mobile-controls {
+  display: flex;
+  justify-content: center;
+  gap: 18px;
+  margin-top: 16px;
+}
+
+.control-button {
+  width: min(35vw, 150px);
+  height: 58px;
+  border-radius: 18px;
+  font-size: 1.6rem;
+}
+
+@keyframes floatCloud {
+  from { transform: translateX(-8px); }
+  to { transform: translateX(18px); }
+}
+
+@keyframes bounceCatch {
+  0%, 100% { transform: translateX(-50%) scale(1); }
+  45% { transform: translateX(-50%) scale(1.18) rotate(-4deg); }
+}
+
+@keyframes pop {
+  from { transform: scale(0.45); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+@media (max-width: 620px) {
+  .page-shell { padding: 10px; }
+  .hud { gap: 6px; }
+  .hud-item { padding: 9px 4px; font-size: 0.9rem; }
+  .game-area { min-height: 390px; height: 64vh; border-radius: 22px; }
+  .player { width: 72px; font-size: 3rem; }
+  .cat { width: 44px; height: 44px; font-size: 2rem; }
+}
