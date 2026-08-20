@@ -45,7 +45,7 @@ function resetGame() {
   score = 0;
   lives = 3;
 //  catSpeed = 80;
-  catSpeed = 40;
+  catSpeed = 10;
   spawnDelay = 1500;
   lastSpawnTime = 0;
   cats.splice(0).forEach((cat) => cat.element.remove());
